@@ -11,7 +11,7 @@ int op_jmp (char* op, u8 code[], u8 len, char buf[], u8 buflen, u32 addr, u8 opt
 	if (len == 5)  { 
 		memcpy (&pos_off, code+1, sizeof(pos_off));
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%xh\n",  op, (addr + pos_off));
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x\n", op, (addr + pos_off));
@@ -21,7 +21,7 @@ int op_jmp (char* op, u8 code[], u8 len, char buf[], u8 buflen, u32 addr, u8 opt
 		neg_off = code[1];
 		memcpy (&neg_off, code+1, sizeof(neg_off));
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%xh\n",  op, (addr + neg_off));
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x\n", op, (addr + neg_off));
@@ -37,7 +37,7 @@ int op_jmp_ff (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 
 	switch ((code[1] & 0xc0) >> 6)  {
 		case 0x00:
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t[%s]\n", op, dstreg);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,*(%s)\n", op, dstreg);
@@ -46,14 +46,14 @@ int op_jmp_ff (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		case 0x01:
 			if (len < 3) return -1;
 
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t[%s+%d]\n", op, dstreg, code[2]);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,*0x%x(%s)\n", op, code[2], dstreg);
 			break;
 
 		case 0x03:
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s\n", op, dstreg);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,*%s\n", op, dstreg);

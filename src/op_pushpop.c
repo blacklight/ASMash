@@ -13,7 +13,7 @@ int op_pushpop (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		if (len < 5) return -1;
 		memcpy (&var, code+1, sizeof(var));
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "push\t0x%x\n", var);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "push\t$0x%x\n", var);

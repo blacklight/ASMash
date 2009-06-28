@@ -8,7 +8,7 @@ int op_scal8 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if (len < 2) return -1;
 
 	if (code[0] == 0x4)  {
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\tal,0x%x\n", op, code[1]);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,al\n", op, code[1]);
@@ -20,7 +20,7 @@ int op_scal8 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		case 0x16:
 			get_dstreg8 (code[0], reg, sizeof(reg), opts);
 			
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x\n", op, reg, code[1]);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%s\n", op, code[1], reg);
@@ -40,14 +40,14 @@ int op_reg8 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if ((code[0] & 0x3) == 0x0)  {
 		get_dstreg8 (code[1], dstreg, sizeof(dstreg), opts);
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,%s\n", op, dstreg, srcreg);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,%s\n", op, srcreg, dstreg);
 	} else if ((code[0] & 0x3) == 0x2)  {
 		get_dstreg (code[1], dstreg, sizeof(dstreg), opts);
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,[%s]\n", op, srcreg, dstreg);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t(%s),%s\n", op, dstreg, srcreg);

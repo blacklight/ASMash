@@ -3,7 +3,6 @@
 
 main()  {
 	u8 code[] =
-		"\xc1\xc8\x02"
 		"\xb8\x04\x00\x00\x00"	/*mov    $0x4,%eax*/
 		"\xbb\x01\x00\x00\x00"	/*mov    $0x1,%ebx*/
 		"\xb9\x60\x80\x04\x08"	/*mov    $0x8048060,%ecx*/

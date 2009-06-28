@@ -29,7 +29,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if ( ((code[0] & 0xfc) >> 2) == 0x28)  {
 		memcpy (&offset, code+1, sizeof(offset));
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\tDWORD PTR 0x%x,eax\n", op, offset);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%%eax\n", op, offset);
@@ -40,7 +40,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if (code[0] == 0x25)  {
 		memcpy (&offset, code+1, sizeof(offset));
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\teax,0x%x\n", "and", offset);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%%eax\n", "and", offset);
@@ -51,7 +51,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if ((code[1] & 0x7) == 0x5)  {
 		if (len < 6) return -1;
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\tDWORD PTR 0x%x,%s\n", op, offset, srcreg);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x\n", op, srcreg, offset);
@@ -73,7 +73,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 				}
 			}
 
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t[%s],%s\n", op, dstreg, srcreg);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,(%s)\n", op, srcreg, dstreg);
@@ -96,7 +96,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 				offset = code[3];
 			}
 
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t[%s+%d],%s\n", op, dstreg, offset, srcreg);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x(%s)\n", op, srcreg, offset, dstreg);
@@ -107,7 +107,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 			break;
 
 		case 0x3:
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,%s\n", op, dstreg, srcreg);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,%s\n", op, srcreg, dstreg);
@@ -137,7 +137,7 @@ int op_reg32_inv (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  
 	if ((code[1] & 0x7) == 0x5)  {
 		if (len < 6) return -1;
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,DWORD PTR 0x%x\n", op, srcreg, offset);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x,%s\n", op, offset, srcreg);
@@ -159,7 +159,7 @@ int op_reg32_inv (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  
 				}
 			}
 
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,[%s]\n", op, dstreg, srcreg);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t(%s),%s\n", op, srcreg, dstreg);
@@ -182,7 +182,7 @@ int op_reg32_inv (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  
 				offset = code[3];
 			}
 
-			if ((opts & 0x1) == INTEL_FLAVOUR)
+			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,[%s+%d]\n", op, dstreg, srcreg, offset);
 			else
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x(%s),%s\n", op, offset, srcreg, dstreg);
@@ -220,14 +220,14 @@ int op_lea32 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		get_dstreg (code[1], dstreg, sizeof(dstreg), opts);
 
 	if ((code[1] & 0xc0) == 0x00)  {
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,[%s]\n", op, dstreg, srcreg);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t(%s),%s\n", op, srcreg, dstreg);
 	} else if ((code[1] & 0xc0) == 0x40)  {
 		if (len < 3) return -1;
 
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,[%s+%d]\n",
 					op, dstreg, srcreg, ((code[1] & 0x07) == 0x04) ? code[3] : code[2]);
 		else

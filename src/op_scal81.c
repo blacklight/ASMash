@@ -24,7 +24,7 @@ int op_scal81 (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		case 0x1f: strcpy (op, "cmp"); break;
 	}
 
-	if ((opts & 0x1) == INTEL_FLAVOUR)
+	if ((opts & 0x1) == INTEL_FLAVOR)
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x\n", op, reg, scal);
 	else
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%s\n", op, scal, reg);
@@ -54,7 +54,7 @@ int op_scal83 (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		case 0x1f: strcpy (op, "cmp"); break;
 	}
 
-	if ((opts & 0x1) == INTEL_FLAVOUR)
+	if ((opts & 0x1) == INTEL_FLAVOR)
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x\n", op, reg, scal);
 	else
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%s\n", op, scal, reg);

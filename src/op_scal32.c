@@ -10,7 +10,7 @@ int op_scal32 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	get_dstreg(code[0], reg, sizeof(reg), opts);
 	memcpy (&scal, code+1, sizeof(scal));
 
-	if ((opts & 0x1) == INTEL_FLAVOUR)
+	if ((opts & 0x1) == INTEL_FLAVOR)
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x\n", op, reg, scal);
 	else
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%s\n", op, scal, reg);
@@ -27,7 +27,7 @@ int op_rotsh (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if (len == 2)
 		snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s\n", op, reg);
 	else if (len == 3)  {
-		if ((opts & 0x1) == INTEL_FLAVOUR)
+		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%x\n", op, reg, code[2]);
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%s\n", op, code[2], reg);

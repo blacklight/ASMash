@@ -28,7 +28,7 @@ void single_op (u8 code, char buf[], u8 buflen, u8 opts)  {
 		case 0x96:
 		case 0x97:
 			sprintf (buf+strlen(buf), "xchg\t%s,%s\n",
-					((opts & 0x1) == INTEL_FLAVOUR) ? "eax" : "%%eax", reg); break;
+					((opts & 0x1) == INTEL_FLAVOR) ? "eax" : "%%eax", reg); break;
 
 		case 0x98:
 			sprintf (buf+strlen(buf), "cwtl\n"); break;

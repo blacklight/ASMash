@@ -64,8 +64,8 @@
 #define	DH	0x6
 #define	BH	0x7
 
-#define	INTEL_FLAVOUR	0x0
-#define	AT_FLAVOUR	0x1
+#define	INTEL_FLAVOR	0x0
+#define	AT_FLAVOR		0x1
 #define	DISP_BINARY	0x2
 #define	BITS_16		0x4
 #define	BITS_8		0x8
@@ -73,8 +73,6 @@
 typedef unsigned char u8;
 typedef unsigned short int u16;
 typedef unsigned long int u32;
-
-static u8 flavour = INTEL_FLAVOUR;
 
 unsigned char* get_executable_elf_code(char *fname, int *code_size, int *addr);
 char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts);
