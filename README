@@ -1,0 +1,24 @@
+libElfShark is a tiny library for disassembling and assembling (TODO) Assembly / machine code
+for x86 architecture. It currently supports disassembling of binary "as it is" code (take a
+look at the tiny example in the examples/ directory to understand what it means) and from ELF
+files (this feature is still *VERY* experimental and I suggest you not to try it until new
+order, as get_executable_elf_code() function is still an open yard and so far it can't
+correctly recognize the end of the .text segment inside an ELF file yet). TODO: disassembling
+Windows PE executable files.
+
+All I suggest you to use now is decode_to_asm() function, that will get 4 parameters:
+
+1. Executable binary code, just as a unsigned char[] array;
+2. The length, in bytes, of the executable code;
+3. The initial address of the binary code (0 if it doesn't matter, the true address if you
+   disassembled that code from an ELF/PE executable file);
+4. Options. The only options you should care are INTEL_FLAVOUR and AT_FLAVOUR. They respectly
+   set the output format to Intel (default) or AT&T format. Other options specified in elfshark.h
+   are generally just used by the library code and you should not care about, but if you *REALLY*
+   wish to add options you can just OR them together (e.g. AT_FLAVOUR|BITS_16).
+
+Once installed, you can compile your source using ElfShark by adding -lelfshark to your command
+line or by explicitly adding the library file to your linker options.
+
+by BlackLight <blacklight@0x00.ath.cx>
+
