@@ -5,18 +5,18 @@
  *
  * Copyright (C) 2009 BlackLight
  *
- * uSock is free software; you can redistribute it and/or modify it under
+ * ElfShark is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free
  * Software Foundation; either version 3 or (at your option) any later 
  * version.
  *
- * uSock is distributed in the hope that it will be useful, but WITHOUT
+ * ElfShark is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with uSock; if not, write to the Free Software Foundation, Inc.,
+ * with ElfShark; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  *
  * As a special exception, if other files instantiate templates or use
@@ -72,7 +72,7 @@
 
 typedef unsigned char u8;
 typedef unsigned short int u16;
-typedef unsigned long int u32;
+typedef unsigned int u32;
 
 unsigned char* get_executable_elf_code(char *fname, int *code_size, int *addr);
 char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts);
@@ -104,6 +104,7 @@ int op_lea32 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts);
 int op_inout (u8 code[], u8 len, char buf[], u8 buflen, u8 opts);
 int op_notneg (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts);
 int op_muldiv (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts);
+int op_rotsh (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts);
 
 #endif
 

@@ -2,18 +2,19 @@ SRCDIR=src
 INCLUDEDIR=include
 PREFIX=/usr/local
 LIB=elfshark
+OPTS=-Wall -pedantic
 
 all:
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/decode.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/elf.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_bits8.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_jmp.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_pushpop.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_reg32.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_scal32.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_scal81.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/single.c
-	gcc -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/utils.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/decode.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/elf.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_bits8.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_jmp.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_pushpop.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_reg32.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_scal32.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/op_scal81.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/single.c
+	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/utils.c
 	gcc -shared -Wl,-soname,lib$(LIB).so.0 -o lib$(LIB).so.0.0.0 *.o
 	ar rcs lib$(LIB).a *.o
 

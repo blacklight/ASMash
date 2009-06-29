@@ -3,7 +3,6 @@
 #include "elfshark.h"
 
 int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
-	int i;
 	char srcreg[8], dstreg[8];
 	u32 offset;
 
@@ -32,7 +31,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		if ((opts & 0x1) == INTEL_FLAVOR)
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\tDWORD PTR 0x%x,eax\n", op, offset);
 		else
-			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,0x%%eax\n", op, offset);
+			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%%eax\n", op, offset);
 
 		return 0;
 	}
@@ -113,10 +112,11 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,%s\n", op, srcreg, dstreg);
 			break;
 	}
+
+	return 0;
 }
 
 int op_reg32_inv (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
-	int i;
 	char srcreg[8], dstreg[8];
 	u32 offset;
 
@@ -188,6 +188,8 @@ int op_reg32_inv (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x(%s),%s\n", op, offset, srcreg, dstreg);
 			break;
 	}
+
+	return 0;
 }
 
 void op_incdec (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
@@ -234,6 +236,8 @@ int op_lea32 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x(%s),%s\n",
 					op, ((code[1] & 0x07) == 0x04) ? code[3] : code[2], srcreg, dstreg);
 	}
+
+	return 0;
 }
 
 int op_notneg (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {

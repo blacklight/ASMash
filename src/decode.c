@@ -7,7 +7,7 @@
 #define	LINESIZE		0xff
 
 char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
-	u32 i, j, increment = 0, buflen = 0;
+	u32 i, increment = 0, buflen = 0;
 	char* buf = NULL;
 	char line[LINESIZE];
 

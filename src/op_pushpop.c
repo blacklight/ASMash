@@ -3,7 +3,6 @@
 #include "elfshark.h"
 
 int op_pushpop (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
-	int i;
 	char dstreg[8];
 	u32 var;
 

@@ -26,12 +26,12 @@ int op_scal8 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t$0x%x,%s\n", op, code[1], reg);
 			break;
 	}
+
+	return 0;
 }
 
 int op_reg8 (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
-	int i;
 	char srcreg[8], dstreg[8];
-	u32 offset;
 
 	if (len < 2) return -1;
 

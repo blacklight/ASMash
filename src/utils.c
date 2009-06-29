@@ -273,6 +273,7 @@ int interrupt (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 
 	if ((opts & 0x1) == INTEL_FLAVOR) snprintf (buf, buflen, "int\t%xh\n", code[1]);
 	else snprintf (buf, buflen, "int\t0x%x\n", code[1]);
+	return 0;
 }
 
 int op_inout (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
@@ -317,8 +318,8 @@ int op_inout (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 				snprintf (buf, buflen, "out\t0x%x,%s\n",
 						code[off_index], (opts & BITS_16) ? "ax" : "eax");
 			else
-				snprintf (buf, buflen, "out\t%%eax,$0x%x\n",
-						code[off_index], (opts & BITS_16) ? "%%ax" : "%%eax");
+				snprintf (buf, buflen, "out\t%s,$0x%x\n",
+						(opts & BITS_16) ? "%%ax" : "%%eax", code[off_index]);
 			break;
 
 		case 0xec:
@@ -353,6 +354,8 @@ int op_inout (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 						(opts & BITS_16) ? "%%ax" : "%%eax");
 			break;
 	}
+
+	return 0;
 }
 
 void unknown (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {

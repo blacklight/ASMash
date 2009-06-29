@@ -9,14 +9,8 @@
 
 unsigned char* get_executable_elf_code(char *fname, int *code_size, int *addr)  {
 	unsigned char *code;
-	int i,j,fd;
-	int hlen,s_off;
-	
-	u8  buff8;
-	u16 buff16;
-	u32 buff32;
+	int fd, hlen, s_off;
 	Elf32_Ehdr elfhdr;
-	Elf32_Shdr s_hdr;
 
 	if (!fname)
 		return NULL;

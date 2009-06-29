@@ -26,6 +26,8 @@ int op_jmp (char* op, u8 code[], u8 len, char buf[], u8 buflen, u32 addr, u8 opt
 		else
 			snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t0x%x\n", op, (addr + neg_off));
 	}
+
+	return 0;
 }
 
 int op_jmp_ff (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
@@ -40,7 +42,7 @@ int op_jmp_ff (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t[%s]\n", op, dstreg);
 			else
-				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,*(%s)\n", op, dstreg);
+				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t*(%s)\n", op, dstreg);
 			break;
 
 		case 0x01:
@@ -49,15 +51,17 @@ int op_jmp_ff (char *op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t[%s+%d]\n", op, dstreg, code[2]);
 			else
-				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,*0x%x(%s)\n", op, code[2], dstreg);
+				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t*0x%x(%s)\n", op, code[2], dstreg);
 			break;
 
 		case 0x03:
 			if ((opts & 0x1) == INTEL_FLAVOR)
 				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s\n", op, dstreg);
 			else
-				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t%s,*%s\n", op, dstreg);
+				snprintf (buf+strlen(buf), buflen-strlen(buf), "%s\t*%s\n", op, dstreg);
 			break;
 	}
+
+	return 0;
 }
 
