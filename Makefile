@@ -2,7 +2,7 @@ SRCDIR=src
 INCLUDEDIR=include
 PREFIX=/usr/local
 LIB=elfshark
-OPTS=-Wall -pedantic
+OPTS=-Wall -pedantic -pedantic-errors
 
 all:
 	gcc $(OPTS) -I$(INCLUDEDIR) -fPIC -g -c $(SRCDIR)/decode.c
