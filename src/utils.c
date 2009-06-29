@@ -272,7 +272,7 @@ int interrupt (u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 	if (len < 2) return -1;
 
 	if ((opts & 0x1) == INTEL_FLAVOR) snprintf (buf, buflen, "int\t%xh\n", code[1]);
-	else snprintf (buf, buflen, "int\t0x%x\n", code[1]);
+	else snprintf (buf, buflen, "int\t$0x%x\n", code[1]);
 	return 0;
 }
 

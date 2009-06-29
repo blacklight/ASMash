@@ -1,4 +1,4 @@
-libElfShark is a tiny library for disassembling and assembling (TODO) Assembly / machine code
+libASMash is a tiny library for disassembling and assembling (TODO) Assembly / machine code
 for x86 architecture. It currently supports disassembling of binary "as it is" code (take a
 look at the tiny example in the examples/ directory to understand what it means) and from ELF
 files (this feature is still *VERY* experimental and I suggest you not to try it until new
@@ -17,7 +17,7 @@ All I suggest you to use now is decode_to_asm() function, that will get 4 parame
    are generally just used by the library code and you should not care about, but if you *REALLY*
    wish to add options you can just OR them together (e.g. AT_FLAVOUR|BITS_16).
 
-Once installed, you can compile your source using ElfShark by adding -lelfshark to your command
+Once installed, you can compile your source using ASMash by adding -lelfshark to your command
 line or by explicitly adding the library file to your linker options.
 
 by BlackLight <blacklight@0x00.ath.cx>
