@@ -7,9 +7,9 @@
 #define	LINESIZE		0xff
 
 char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
-	u32 i, increment = 0, buflen = 0;
+	u32 i, j, increment = 0, buflen = 0;
 	char *buf = NULL, *tmpbuf = NULL;
-	char line[LINESIZE];
+	char addr[LINESIZE], line[LINESIZE];
 
 	if (!init_addr) init_addr = 0x08048000;
 
@@ -77,7 +77,7 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 					case 0x87:
 						op_reg32 ("xchg", code+i, increment+1, line, LINESIZE, opts); break;
 					case 0x89:
-						if ((code[i+1] & 0x7) == 0x5) increment = 5;
+						if ((code[i+1] & 0x7) == 0x5 && code[i+1] < 0x40) increment = 5;
 						op_reg32 ("mov", code+i, increment+1, line, LINESIZE, opts); break;
 					case 0xa1:
 					case 0xa3:
@@ -206,7 +206,7 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 				if ((code[i+1] & 0xf0) == 0x50)  {
 					increment = 1;
 
-					( ((code[i+1] & 0x4) >> 3) == 0x0 )
+					((code[i+1] >= 0x50) && (code[i+1] <= 0x57))
 						? op_pushpop ("push", code+i+1, increment+1, line, LINESIZE, opts|BITS_16)
 						: op_pushpop ("pop" , code+i+1, increment+1, line, LINESIZE, opts|BITS_16);
 
@@ -486,7 +486,7 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 			case 0x5d:
 			case 0x5e:
 			case 0x5f:
-				( ((code[i] & 0x4) >> 3) == 0x0 )
+				(code[i] >= 0x50 && code[i] <= 0x57)
 					? op_pushpop ("push", code+i, increment+1, line, LINESIZE, opts)
 					: op_pushpop ("pop" , code+i, increment+1, line, LINESIZE, opts);
 
@@ -718,7 +718,21 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 				break;
 		}
 		
-		buflen += strlen(line) + 2;
+		memset (addr, 0x0, sizeof(addr));
+		sprintf (addr, "%.8x:\t", init_addr+i);
+
+		if ((opts & DISP_BINARY))  {
+			for (j=i; j < i+increment+1; j++)
+				sprintf (addr, "%s%.2x ", addr, code[j]);
+
+			for (j=0; j < 7-increment; j++)
+				sprintf (addr, "%s   ", addr);
+		}
+
+		if (!(*line))
+			sprintf (line, "\n");
+
+		buflen += strlen(line) + strlen(addr) + 2;
 		
 		if (!(tmpbuf = (char*) realloc(buf, buflen)))  {
 			free(buf);
@@ -726,7 +740,7 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 		}
 
 		buf = tmpbuf;
-		sprintf (buf, "%s%s", buf, line);
+		sprintf (buf, "%s%s%s", buf, addr, line);
 		i += increment;
 	}
 

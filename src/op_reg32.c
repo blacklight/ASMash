@@ -47,7 +47,7 @@ int op_reg32 (char* op, u8 code[], u8 len, char buf[], u8 buflen, u8 opts)  {
 		return 0;
 	}
 
-	if ((code[1] & 0x7) == 0x5)  {
+	if ((code[1] & 0x7) == 0x5 && code[1] < 0x40)  {
 		if (len < 6) return -1;
 
 		if ((opts & 0x1) == INTEL_FLAVOR)

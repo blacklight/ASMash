@@ -19,11 +19,7 @@ int main (int argc, char **argv)  {
 		return 1;
 	}
 
-	// flags = 0 -> default ASM synthax: Intel
-	printf ("%s\n", decode_to_asm (code, s_info.sec_size, s_info.sec_vaddr, 0));
-
-	// To get the output in AT&T style:
-	//printf ("%s\n", decode_to_asm (code, sizeof(code)-1, 0, AT_FLAVOUR));
+	printf ("%s\n", decode_to_asm (code, s_info.sec_size, s_info.sec_vaddr, INTEL_FLAVOR|DISP_BINARY));
 	free(code);
 }
 

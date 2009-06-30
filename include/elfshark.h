@@ -35,8 +35,6 @@
 #ifndef	__ELFSHARK_H
 #define	__ELFSHARK_H
 
-#define	INSTRLEN	24
-
 #define	EAX	0x0
 #define	ECX	0x1
 #define	EDX	0x2
