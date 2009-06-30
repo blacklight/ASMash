@@ -1,0 +1,9 @@
+2009-06-30 BlackLight <blacklight@0x00.ath.cx>
+
+* (AA_GetSectionContentFromELF, AA_GetSectionInfoFromELF): new functions.
+
+* elf.c: Support for ELF format finally working.
+
+* decode.c (decode_to_asm): Fixed a glibc corruption dued to a wrong realloc()
+size.
+

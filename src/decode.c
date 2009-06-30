@@ -8,7 +8,7 @@
 
 char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 	u32 i, increment = 0, buflen = 0;
-	char* buf = NULL;
+	char *buf = NULL, *tmpbuf = NULL;
 	char line[LINESIZE];
 
 	if (!init_addr) init_addr = 0x08048000;
@@ -41,7 +41,13 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 				if ((code[i+1] & 0xc0) >> 6 == 0x10)  {
 					unknown (&(code[i]), 1, line, LINESIZE, opts);
 					buflen += strlen(line);
-					buf = (char*) realloc(buf, buflen);
+
+					if (!(tmpbuf = (char*) realloc(buf, buflen)))  {
+						free(buf);
+						return NULL;
+					}
+
+					buf = tmpbuf;
 					sprintf (buf, "%s%s", buf, line);
 					continue;
 				}
@@ -98,7 +104,13 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 				if ((code[i+1] & 0xc0) >> 6 == 0x10)  {
 					unknown (&(code[i]), 1, line, LINESIZE, opts);
 					buflen += strlen(line);
-					buf = (char*) realloc(buf, buflen);
+					
+					if (!(tmpbuf = (char*) realloc(buf, buflen)))  {
+						free(buf);
+						return NULL;
+					}
+
+					buf = tmpbuf;
 					sprintf (buf, "%s%s", buf, line);
 					continue;
 				}
@@ -209,7 +221,13 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 				if ((code[i+2] & 0xc0) >> 6 == 0x10)  {
 					unknown (&(code[i]), 1, line, LINESIZE, opts);
 					buflen += strlen(line);
-					buf = (char*) realloc(buf, buflen);
+
+					if (!(tmpbuf = (char*) realloc(buf, buflen)))  {
+						free(buf);
+						return NULL;
+					}
+
+					tmpbuf = buf;
 					sprintf (buf, "%s%s", buf, line);
 					continue;
 				}
@@ -700,8 +718,14 @@ char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts)  {
 				break;
 		}
 		
-		buflen += strlen(line);
-		buf = (char*) realloc(buf, buflen);
+		buflen += strlen(line) + 2;
+		
+		if (!(tmpbuf = (char*) realloc(buf, buflen)))  {
+			free(buf);
+			return NULL;
+		}
+
+		buf = tmpbuf;
 		sprintf (buf, "%s%s", buf, line);
 		i += increment;
 	}
