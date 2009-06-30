@@ -1,23 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <elfshark.h>
 
-main()  {
-	u8 code[] =
-		"\xb8\x04\x00\x00\x00"	/*mov    $0x4,%eax*/
-		"\xbb\x01\x00\x00\x00"	/*mov    $0x1,%ebx*/
-		"\xb9\x60\x80\x04\x08"	/*mov    $0x8048060,%ecx*/
-		"\xba\x06\x00\x00\x00"	/*mov    $0x6,%edx*/
-		"\xcd\x80"			/*int    $0x80*/
-		"\xb8\x01\x00\x00\x00"	/*mov    $0x1,%eax*/
-		"\xbb\x00\x00\x00\x00"	/*mov    $0x0,%ebx*/
-		"\xcd\x80"			/*int    $0x80*/
-		"\xc9"				/*leave*/
-		"\xc3"				/*ret*/;
-	
+int main (int argc, char **argv)  {
+	u8 *code = NULL;
+	struct sec_info s_info;
+
+	if (!argv[1])  {
+		fprintf (stderr, "Usage: %s <executable ELF file>\n", argv[0]);
+		return 1;
+	}
+
+	strcpy (s_info.sec_name, ".text");
+
+	if (!(code = AA_GetSectionContentFromELF(argv[1], &s_info)))  {
+		fprintf (stderr, "Error: Unable to get .text content from %s\n", argv[1]);
+		return 1;
+	}
+
 	// flags = 0 -> default ASM synthax: Intel
-	printf ("%s\n", decode_to_asm (code, sizeof(code)-1, 0, 0));
+	printf ("%s\n", decode_to_asm (code, s_info.sec_size, s_info.sec_vaddr, 0));
 
 	// To get the output in AT&T style:
 	//printf ("%s\n", decode_to_asm (code, sizeof(code)-1, 0, AT_FLAVOUR));
+	free(code);
 }
 

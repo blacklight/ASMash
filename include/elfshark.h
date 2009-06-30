@@ -74,6 +74,16 @@ typedef unsigned char u8;
 typedef unsigned short int u16;
 typedef unsigned int u32;
 
+struct sec_info  {
+	char sec_name[0xf];
+	size_t sec_vaddr;
+	size_t sec_offset;
+	size_t sec_size;
+};
+
+u8* AA_GetSectionContentFromELF (const char *fname, struct sec_info *s_info);
+int AA_GetSectionInfoFromELF (const char *fname, struct sec_info *info);
+
 unsigned char* get_executable_elf_code(char *fname, int *code_size, int *addr);
 char* decode_to_asm (u8 code[], u32 len, u32 init_addr, u8 opts);
 
